@@ -46,7 +46,10 @@ module system
     input             ftdi_tx,
     output            ftdi_rx,
     input             ftdi_rts,
-    output            ftdi_cts
+    output            ftdi_cts,
+    //qspi
+    inout  [3:0]      qspi_dq,
+    output            qspi_csn
   );
 
   wire          sys_clk;
@@ -142,15 +145,11 @@ module system
     .M_AXI_wready(1'b0),
     .M_AXI_wstrb(),
     .M_AXI_wvalid(),
-    .QSPI_0_io0_io(),
-    .QSPI_0_io1_io(),
-    .QSPI_0_io2_io(),
-    .QSPI_0_io3_io(),
-    .QSPI_0_ss_io(),
-    .QSPI_STARTUP_IO_cfgclk(),
-    .QSPI_STARTUP_IO_cfgmclk(),
-    .QSPI_STARTUP_IO_eos(),
-    .QSPI_STARTUP_IO_preq(),
+    .QSPI_0_io0_io(qspi_dq[0]),
+    .QSPI_0_io1_io(qspi_dq[1]),
+    .QSPI_0_io2_io(qspi_dq[2]),
+    .QSPI_0_io3_io(qspi_dq[3]),
+    .QSPI_0_ss_io(qspi_csn),
     .S_AXI_araddr(32'h00000000),
     .S_AXI_arburst(2'b00),
     .S_AXI_arcache(4'b0000),
@@ -190,7 +189,6 @@ module system
     .S_AXI_wvalid(1'b0),
     .UART_rxd(ftdi_tx),
     .UART_txd(ftdi_rx),
-    .ext_spi_clk(1'b0),
     .gpio_io_i(slide_switches),
     .gpio_io_o(leds),
     .gpio_io_t(),

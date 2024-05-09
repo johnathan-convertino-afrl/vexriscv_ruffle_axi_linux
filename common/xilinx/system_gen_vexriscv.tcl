@@ -91,6 +91,7 @@ ip_vlvn_version_check "xilinx.com:ip:axi_quad_spi:3.2"
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_quad_spi:3.2 axi_quad_spi
 set_property CONFIG.C_SPI_MEMORY {3} [get_bd_cells axi_quad_spi]
 set_property CONFIG.C_SPI_MODE {2} [get_bd_cells axi_quad_spi]
+set_property CONFIG.C_USE_STARTUP {1} [get_bd_cells axi_quad_spi]
 
 create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddrx_rtl:1.0 DDR
 connect_bd_intf_net [get_bd_intf_pins axi_ddr_ctrl/DDR*] [get_bd_intf_ports DDR]
@@ -233,10 +234,9 @@ connect_bd_intf_net [get_bd_intf_pins axi_ethernetlite/S_AXI] -boundary_type upp
 connect_bd_net [get_bd_pins axi_ethernetlite/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_out1]
 connect_bd_net [get_bd_pins axi_ethernetlite/s_axi_aresetn] [get_bd_pins sys_rstgen/peripheral_aresetn]
 
-create_bd_port -dir I -type clk -freq_hz 100000000 ext_spi_clk
-connect_bd_net [get_bd_pins /axi_quad_spi/ext_spi_clk] [get_bd_ports ext_spi_clk]
-create_bd_intf_port -mode Master -vlnv xilinx.com:display_startup_io:startup_io_rtl:1.0 QSPI_STARTUP_IO
-connect_bd_intf_net [get_bd_intf_pins axi_quad_spi/STARTUP_IO] [get_bd_intf_ports QSPI_STARTUP_IO]
+connect_bd_net [get_bd_pins axi_quad_spi/ext_spi_clk] [get_bd_pins clk_wiz_1/clk_out1]
+# create_bd_intf_port -mode Master -vlnv xilinx.com:display_startup_io:startup_io_rtl:1.0 QSPI_STARTUP_IO
+# connect_bd_intf_net [get_bd_intf_pins axi_quad_spi/STARTUP_IO] [get_bd_intf_ports QSPI_STARTUP_IO]
 create_bd_intf_port -mode Master -vlnv xilinx.com:interface:spi_rtl:1.0 QSPI_0
 connect_bd_intf_net [get_bd_intf_pins axi_quad_spi/SPI_0] [get_bd_intf_ports QSPI_0]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_interconnect/M09_AXI] [get_bd_intf_pins axi_quad_spi/AXI_LITE]
@@ -306,6 +306,7 @@ exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_axi_
 exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_inst_ruffle_axi_bscane_reg0]
 exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_inst_ruffle_axi_bscane_reg0_1]
 exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_M_AXI_Reg]
+exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_axi_quad_spi_Reg]
 
 set_property offset 0x00200000 [get_bd_addr_segs {S_AXI/SEG_inst_ruffle_axi_bscane_reg0}]
 set_property offset 0x50000000 [get_bd_addr_segs {inst_ruffle_axi_bscane/m_axi_dbus/SEG_M_AXI_Reg}]
