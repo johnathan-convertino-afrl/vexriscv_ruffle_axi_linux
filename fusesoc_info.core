@@ -28,7 +28,7 @@ filesets:
 
   dep:
     depend:
-      - spinalhdl:cpu:ruffle_axi_bscane:1.0.0
+      - spinalhdl:cpu:ruffle_axi_jtag_xilinx_bscane:1.0.0
       - AFRL:utility:helper:1.0.0
       - AFRL:utility:tcl_helper_check:1.0.0
       - AFRL:utility:vivado_board_support_packages
