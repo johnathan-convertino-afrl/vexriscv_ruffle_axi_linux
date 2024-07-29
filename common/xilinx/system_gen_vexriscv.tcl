@@ -239,10 +239,10 @@ connect_bd_net [get_bd_pins axi_ddr_ctrl/mmcm_locked] [get_bd_pins ddr_rstgen/dc
 connect_bd_net [get_bd_ports sys_rstn] [get_bd_pins ddr_rstgen/ext_reset_in]
 connect_bd_net [get_bd_pins ddr_rstgen/aux_reset_in] [get_bd_pins axi_ddr_ctrl/ui_clk_sync_rst]
 
-# assign_bd_address
-
 connect_bd_net [get_bd_pins inst_ruffle/io_ddr_clk] [get_bd_pins axi_ddr_ctrl/ui_clk]
 
+
+# assign_bd_address
 # exclude_bd_addr_seg [get_bd_addr_segs axi_ddr_ctrl/memmap/memaddr] -target_address_space [get_bd_addr_spaces inst_ruffle_axi_bscane/m_axi_ibus]
 # exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_axi_ethernetlite_Reg]
 # exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_axi_gpio_Reg]
@@ -253,9 +253,15 @@ connect_bd_net [get_bd_pins inst_ruffle/io_ddr_clk] [get_bd_pins axi_ddr_ctrl/ui
 # exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_M_AXI_Reg]
 # exclude_bd_addr_seg [get_bd_addr_segs inst_ruffle_axi_bscane/m_axi_ibus/SEG_axi_quad_spi_Reg]
 
-# set_property CONFIG.CLK_DOMAIN /clk_wiz_1_clk_out1 [get_bd_intf_pins /inst_ruffle/m_axi_dbus]
-#
-# set_property CONFIG.CLK_DOMAIN system_ps_axi_ddr_ctrl_0_ui_clk [get_bd_intf_pins /inst_ruffle/m_axi_mbus]
+set_property CONFIG.CLK_DOMAIN /clk_wiz_1_clk_out1 [get_bd_intf_pins /inst_ruffle/m_axi_*]
+
+set_property CONFIG.CLK_DOMAIN system_ps_axi_ddr_ctrl_0_ui_clk [get_bd_intf_pins /inst_ruffle/m_axi_mbus]
+
+set_property CONFIG.CLK_DOMAIN system_ps_s_axi_dma_aclk [get_bd_intf_pins /inst_ruffle/s_axi_dma]
+
+set_property CONFIG.ASSOCIATED_BUSIF {s_axi_dma} [get_bd_ports /s_axi_dma_aclk]
+
+set_property CONFIG.ASSOCIATED_BUSIF {M_AXI} [get_bd_ports /s_axi_clk]
 
 regenerate_bd_layout
 
