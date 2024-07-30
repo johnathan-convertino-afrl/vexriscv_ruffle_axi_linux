@@ -113,7 +113,7 @@ module system
     .DDR_odt(ddr2_odt),
     .DDR_ras_n(ddr2_ras_n),
     .DDR_we_n(ddr2_we_n),
-    .IRQ_F2P(3'b000),
+    .IRQ(3'b000),
     .MDIO_mdc(eth_mdc),
     .MDIO_mdio_io(eth_mdio),
     .MII_col(MII_col),

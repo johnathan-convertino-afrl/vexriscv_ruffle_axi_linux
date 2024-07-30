@@ -4,9 +4,9 @@ name : AFRL:project:ruffle_axi_linux:1.0.0
 description: Create a simple Vexrisv SoC for embedded system development.
 
 filesets:
-  src_xilinx:
-    files:
-      - common/xilinx/system_gen_vexriscv.tcl : {file_type : tclSource}
+  #src_xilinx:
+    #files:
+      #- common/xilinx/system_gen_vexriscv.tcl : {file_type : tclSource}
 
   tb:
     files:
@@ -16,6 +16,7 @@ filesets:
     files:
       - nexys-a7-100t/system_constr.xdc : {file_type : xdc}
       - nexys-a7-100t/system_gen_ps.tcl : {file_type : tclSource}
+      - nexys-a7-100t/system_ps_wrapper.v  : {file_type : verilogSource}
       - nexys-a7-100t/system_wrapper.v  : {file_type : verilogSource}
     depend:
       - AFRL:utility:digilent_nexys-a7-100t_board_base_ddr_cfg:1.0.0
@@ -43,7 +44,7 @@ targets:
     <<: *default
     description: Build for nexys-a7-100t digilent development board.
     default_tool: vivado
-    filesets_append : [src_xilinx, nexys-a7-100t]
+    filesets_append : [nexys-a7-100t]
     tools:
       vivado:
         source_mgmt_mode: All
